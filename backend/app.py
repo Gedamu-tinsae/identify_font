@@ -1,29 +1,33 @@
-from flask import Flask, request, jsonify
-from werkzeug.utils import secure_filename
-import os
-import uuid
+from flask import Flask, jsonify
 import logging
+from config import UPLOAD_FOLDER, MAX_CONTENT_LENGTH
 
-# Import font identification functions and config
-from pdf_analyzer import extract_fonts_from_pdf, extract_fonts_advanced, extract_fonts_basic, extract_text_from_images_ocr_simple
-from config import UPLOAD_FOLDER, MAX_CONTENT_LENGTH, ALLOWED_EXTENSIONS
-
+# Initialize Flask app
 app = Flask(__name__)
 
 # Configuration
-app.config['UPLOAD_FOLDER'] = str(UPLOAD_FOLDER)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
 
 # Ensure upload folder exists
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+UPLOAD_FOLDER.mkdir(exist_ok=True)
 
 # Logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+# Import and register blueprints after app initialization to avoid circular imports
+def register_blueprints():
+    from routes.font_routes import font_bp
+    from routes.ocr_routes import ocr_bp
+    from routes.upload_routes import upload_bp
+    
+    app.register_blueprint(font_bp)
+    app.register_blueprint(ocr_bp)
+    app.register_blueprint(upload_bp)
+
+# Register blueprints
+register_blueprints()
 
 @app.route('/')
 def home():
@@ -37,160 +41,6 @@ def home():
             '/api/health': 'GET - Health check'
         }
     })
-
-@app.route('/api/upload', methods=['POST'])
-def upload_pdf():
-    try:
-        if 'pdf_file' not in request.files:
-            return jsonify({'error': 'No PDF file provided'}), 400
-        
-        file = request.files['pdf_file']
-        
-        if file.filename == '':
-            return jsonify({'error': 'No file selected'}), 400
-        
-        if not file or not allowed_file(file.filename):
-            return jsonify({'error': 'Invalid file type. Only PDF files are allowed.'}), 400
-        
-        # Secure filename and save
-        filename = secure_filename(file.filename)
-        unique_filename = f"{uuid.uuid4()}_{filename}"
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-        file.save(filepath)
-        
-        # Process the PDF for font extraction
-        try:
-            font_data = extract_fonts_from_pdf(filepath)
-            
-            # Clean up uploaded file after processing
-            # os.remove(filepath)  # Uncomment if you don't want to store files long-term
-            
-            return jsonify({
-                'success': True,
-                'filename': filename,
-                'font_analysis': font_data
-            })
-        except Exception as e:
-            logger.error(f"Error processing PDF: {str(e)}")
-            return jsonify({'error': f'Failed to process PDF: {str(e)}'}), 500
-            
-    except Exception as e:
-        logger.error(f"Upload error: {str(e)}")
-        return jsonify({'error': f'Upload failed: {str(e)}'}), 500
-
-@app.route('/api/fonts/advanced', methods=['POST'])
-def analyze_fonts_advanced():
-    try:
-        if 'pdf_file' not in request.files:
-            return jsonify({'error': 'No PDF file provided'}), 400
-        
-        file = request.files['pdf_file']
-        
-        if file.filename == '':
-            return jsonify({'error': 'No file selected'}), 400
-        
-        if not file or not allowed_file(file.filename):
-            return jsonify({'error': 'Invalid file type. Only PDF files are allowed.'}), 400
-        
-        # Secure filename and save
-        filename = secure_filename(file.filename)
-        unique_filename = f"{uuid.uuid4()}_{filename}"
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-        file.save(filepath)
-        
-        # Process the PDF for advanced font extraction
-        try:
-            font_data = extract_fonts_advanced(filepath)
-            
-            # Clean up uploaded file after processing
-            # os.remove(filepath)  # Uncomment if you don't want to store files long-term
-            
-            return jsonify({
-                'success': True,
-                'filename': filename,
-                'font_analysis': font_data
-            })
-        except Exception as e:
-            logger.error(f"Error processing PDF: {str(e)}")
-            return jsonify({'error': f'Failed to process PDF: {str(e)}'}), 500
-            
-    except Exception as e:
-        logger.error(f"Upload error: {str(e)}")
-        return jsonify({'error': f'Upload failed: {str(e)}'}), 500
-
-@app.route('/api/fonts/ocr', methods=['POST'])
-def analyze_ocr():
-    try:
-        if 'pdf_file' not in request.files:
-            return jsonify({'error': 'No PDF file provided'}), 400
-
-        file = request.files['pdf_file']
-
-        if file.filename == '':
-            return jsonify({'error': 'No file selected'}), 400
-
-        if not file or not allowed_file(file.filename):
-            return jsonify({'error': 'Invalid file type. Only PDF files are allowed.'}), 400
-
-        # Secure filename and save
-        filename = secure_filename(file.filename)
-        unique_filename = f"{uuid.uuid4()}_{filename}"
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-        file.save(filepath)
-
-        # Process the PDF for OCR text extraction
-        try:
-            ocr_data = extract_text_from_images_ocr_simple(filepath)
-
-            return jsonify({
-                'success': True,
-                'filename': filename,
-                'ocr_analysis': ocr_data
-            })
-        except Exception as e:
-            logger.error(f"Error processing PDF for OCR: {str(e)}")
-            return jsonify({'error': f'Failed to process PDF for OCR: {str(e)}'}), 500
-
-    except Exception as e:
-        logger.error(f"Upload error: {str(e)}")
-        return jsonify({'error': f'Upload failed: {str(e)}'}), 500
-
-@app.route('/api/fonts/basic', methods=['POST'])
-def analyze_fonts_basic():
-    try:
-        if 'pdf_file' not in request.files:
-            return jsonify({'error': 'No PDF file provided'}), 400
-
-        file = request.files['pdf_file']
-
-        if file.filename == '':
-            return jsonify({'error': 'No file selected'}), 400
-
-        if not file or not allowed_file(file.filename):
-            return jsonify({'error': 'Invalid file type. Only PDF files are allowed.'}), 400
-
-        # Secure filename and save
-        filename = secure_filename(file.filename)
-        unique_filename = f"{uuid.uuid4()}_{filename}"
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-        file.save(filepath)
-
-        # Process the PDF for basic font extraction
-        try:
-            font_data = extract_fonts_basic(filepath)
-
-            return jsonify({
-                'success': True,
-                'filename': filename,
-                'font_analysis': font_data
-            })
-        except Exception as e:
-            logger.error(f"Error processing PDF: {str(e)}")
-            return jsonify({'error': f'Failed to process PDF: {str(e)}'}), 500
-
-    except Exception as e:
-        logger.error(f"Upload error: {str(e)}")
-        return jsonify({'error': f'Upload failed: {str(e)}'}), 500
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
