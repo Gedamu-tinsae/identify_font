@@ -3,7 +3,12 @@ Font analysis routes module
 Defines all font-related API endpoints
 """
 from flask import Blueprint, request, jsonify
-from ..controllers.font_controller import process_basic_font_analysis, process_detailed_font_analysis, process_advanced_font_analysis
+try:
+    # Try relative imports first (when run as part of the package)
+    from ..controllers.font_controller import process_basic_font_analysis, process_detailed_font_analysis, process_advanced_font_analysis
+except ImportError:
+    # Fall back to absolute imports (when run directly)
+    from controllers.font_controller import process_basic_font_analysis, process_detailed_font_analysis, process_advanced_font_analysis
 
 font_bp = Blueprint('font', __name__, url_prefix='/api/fonts')
 

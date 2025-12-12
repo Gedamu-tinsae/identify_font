@@ -3,9 +3,16 @@ Font analysis controller module
 Handles the business logic for font analysis endpoints
 """
 import logging
-from ..services.font_service import extract_fonts_from_pdf, extract_fonts_basic, extract_fonts_advanced
-from ..services.file_service import save_uploaded_file, cleanup_file
-from ..config import UPLOAD_FOLDER
+try:
+    # Try relative imports first (when run as part of the package)
+    from ..services.font_service import extract_fonts_from_pdf, extract_fonts_basic, extract_fonts_advanced
+    from ..services.file_service import save_uploaded_file, cleanup_file
+    from ..config import UPLOAD_FOLDER
+except ImportError:
+    # Fall back to absolute imports (when run directly)
+    from services.font_service import extract_fonts_from_pdf, extract_fonts_basic, extract_fonts_advanced
+    from services.file_service import save_uploaded_file, cleanup_file
+    from config import UPLOAD_FOLDER
 
 logger = logging.getLogger(__name__)
 

@@ -18,10 +18,17 @@ logger = logging.getLogger(__name__)
 
 # Import and register blueprints after app initialization to avoid circular imports
 def register_blueprints():
-    from routes.font_routes import font_bp
-    from routes.ocr_routes import ocr_bp
-    from routes.upload_routes import upload_bp
-    
+    try:
+        # Try relative imports first (when run as part of the package)
+        from .routes.font_routes import font_bp
+        from .routes.ocr_routes import ocr_bp
+        from .routes.upload_routes import upload_bp
+    except ImportError:
+        # Fall back to absolute imports (when run directly)
+        from routes.font_routes import font_bp
+        from routes.ocr_routes import ocr_bp
+        from routes.upload_routes import upload_bp
+
     app.register_blueprint(font_bp)
     app.register_blueprint(ocr_bp)
     app.register_blueprint(upload_bp)

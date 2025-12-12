@@ -3,9 +3,16 @@ OCR analysis controller module
 Handles the business logic for OCR analysis endpoints
 """
 import logging
-from ..services.ocr_service import extract_text_from_images_ocr_simple
-from ..services.file_service import save_uploaded_file, cleanup_file
-from ..config import UPLOAD_FOLDER
+try:
+    # Try relative imports first (when run as part of the package)
+    from ..services.ocr_service import extract_text_from_images_ocr_simple
+    from ..services.file_service import save_uploaded_file, cleanup_file
+    from ..config import UPLOAD_FOLDER
+except ImportError:
+    # Fall back to absolute imports (when run directly)
+    from services.ocr_service import extract_text_from_images_ocr_simple
+    from services.file_service import save_uploaded_file, cleanup_file
+    from config import UPLOAD_FOLDER
 
 logger = logging.getLogger(__name__)
 

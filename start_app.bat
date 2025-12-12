@@ -15,10 +15,8 @@ if not exist "frontend" (
 
 REM Start backend in the background
 echo Starting backend server...
-cd backend
-start cmd /c "python app.py"
+start cmd /c "cd /d %~dp0backend && python app.py"
 timeout /t 3 /nobreak >nul
-cd ..
 
 REM Start frontend in the background
 echo Starting frontend server...

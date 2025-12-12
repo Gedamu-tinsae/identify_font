@@ -3,7 +3,12 @@ OCR analysis routes module
 Defines OCR-related API endpoints
 """
 from flask import Blueprint, request, jsonify
-from ..controllers.ocr_controller import process_ocr_analysis
+try:
+    # Try relative imports first (when run as part of the package)
+    from ..controllers.ocr_controller import process_ocr_analysis
+except ImportError:
+    # Fall back to absolute imports (when run directly)
+    from controllers.ocr_controller import process_ocr_analysis
 
 ocr_bp = Blueprint('ocr', __name__, url_prefix='/api/fonts')
 
