@@ -1,0 +1,28 @@
+.App {
+  text-align: center;
+}
+
+.dropzone {
+  transition: all 0.3s ease;
+}
+
+.dropzone:hover {
+  background-color: #f8f9fa;
+}
+
+.file-info {
+  margin-top: 1rem;
+}
+
+.result-container {
+  margin-top: 2rem;
+}
+
+.table th {
+  background-color: #f8f9fa;
+}
+
+.list-group-item {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
