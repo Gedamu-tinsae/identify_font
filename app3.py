@@ -32,6 +32,6 @@ def extract_font_sizes(pdf_path, output_file):
         print(f"An error occurred: {e}")
 
 # Provide the path to your PDF and the output file
-extract_font_sizes(r'C:\Users\80\Desktop\py-utils\identify_font\todo-GRE-2021-2-page.pdf', 'extracted_text.txt')
+extract_font_sizes(r'C:\Users\80\Desktop\py-utils\identify_font\test\todo-GRE-2021-2-page.pdf', 'extracted_text.txt')
 
 # BS

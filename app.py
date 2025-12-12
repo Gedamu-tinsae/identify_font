@@ -17,4 +17,4 @@ def extract_fonts(pdf_path):
             print("No fonts found or unsupported PDF format.")
 
 # Provide the path to your PDF
-extract_fonts(r'C:\Users\80\Desktop\py-utils\identify_font\todo-GRE-2021-2-page.pdf')
+extract_fonts(r'C:\Users\80\Desktop\py-utils\identify_font\test\todo-GRE-2021-2-page.pdf')

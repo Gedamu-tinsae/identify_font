@@ -30,6 +30,7 @@ identify_font/
 │   ├── package.json        # Frontend dependencies
 │   └── ...
 ├── .vscode/                # VS Code settings
+├── test/                   # Test PDF files
 ├── .gitignore              # Git ignore rules
 └── requirements.txt        # Root dependencies
 ```
