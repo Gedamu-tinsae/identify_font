@@ -15,6 +15,39 @@ function App() {
   const [error, setError] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
 
+  const handleBasicAnalyze = async () => {
+    if (!pdfFile) {
+      setError('Please select a PDF file first');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setUploadProgress(0);
+
+    try {
+      const formData = new FormData();
+      formData.append('pdf_file', pdfFile);
+
+      const response = await axios.post(`${API_BASE_URL}/api/fonts/basic`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: (progressEvent) => {
+          const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(progress);
+        }
+      });
+
+      setAnalysisResult(response.data);
+    } catch (err) {
+      console.error('Basic analysis error:', err);
+      setError(err.response?.data?.error || 'Failed to analyze PDF. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleAnalyze = async () => {
     if (!pdfFile) {
       setError('Please select a PDF file first');
@@ -113,6 +146,7 @@ function App() {
             <AnalysisButtons
               pdfFile={pdfFile}
               loading={loading}
+              handleBasicAnalyze={handleBasicAnalyze}
               handleAnalyze={handleAnalyze}
               handleAdvancedAnalyze={handleAdvancedAnalyze}
               handleClear={handleClear}

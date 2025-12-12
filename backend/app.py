@@ -5,7 +5,7 @@ import uuid
 import logging
 
 # Import font identification functions and config
-from pdf_analyzer import extract_fonts_from_pdf, extract_fonts_advanced
+from pdf_analyzer import extract_fonts_from_pdf, extract_fonts_advanced, extract_fonts_basic
 from config import UPLOAD_FOLDER, MAX_CONTENT_LENGTH, ALLOWED_EXTENSIONS
 
 app = Flask(__name__)
@@ -31,7 +31,8 @@ def home():
         'message': 'PDF Font Identification API',
         'endpoints': {
             '/api/upload': 'POST - Upload PDF for font analysis',
-            '/api/fonts/advanced': 'POST - Advanced font analysis',
+            '/api/fonts/basic': 'POST - Basic font analysis using pdfminer',
+            '/api/fonts/advanced': 'POST - Advanced font analysis using pdfminer and pdfplumber',
             '/api/health': 'GET - Health check'
         }
     })
@@ -112,6 +113,43 @@ def analyze_fonts_advanced():
             logger.error(f"Error processing PDF: {str(e)}")
             return jsonify({'error': f'Failed to process PDF: {str(e)}'}), 500
             
+    except Exception as e:
+        logger.error(f"Upload error: {str(e)}")
+        return jsonify({'error': f'Upload failed: {str(e)}'}), 500
+
+@app.route('/api/fonts/basic', methods=['POST'])
+def analyze_fonts_basic():
+    try:
+        if 'pdf_file' not in request.files:
+            return jsonify({'error': 'No PDF file provided'}), 400
+
+        file = request.files['pdf_file']
+
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'}), 400
+
+        if not file or not allowed_file(file.filename):
+            return jsonify({'error': 'Invalid file type. Only PDF files are allowed.'}), 400
+
+        # Secure filename and save
+        filename = secure_filename(file.filename)
+        unique_filename = f"{uuid.uuid4()}_{filename}"
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+        file.save(filepath)
+
+        # Process the PDF for basic font extraction
+        try:
+            font_data = extract_fonts_basic(filepath)
+
+            return jsonify({
+                'success': True,
+                'filename': filename,
+                'font_analysis': font_data
+            })
+        except Exception as e:
+            logger.error(f"Error processing PDF: {str(e)}")
+            return jsonify({'error': f'Failed to process PDF: {str(e)}'}), 500
+
     except Exception as e:
         logger.error(f"Upload error: {str(e)}")
         return jsonify({'error': f'Upload failed: {str(e)}'}), 500

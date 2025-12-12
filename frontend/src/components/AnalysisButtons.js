@@ -1,31 +1,39 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-const AnalysisButtons = ({ 
-  pdfFile, 
-  loading, 
-  handleAnalyze, 
-  handleAdvancedAnalyze, 
-  handleClear 
+const AnalysisButtons = ({
+  pdfFile,
+  loading,
+  handleBasicAnalyze,
+  handleAnalyze,
+  handleAdvancedAnalyze,
+  handleClear
 }) => {
   return (
     <div className="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
-      <Button 
-        variant="primary" 
-        onClick={handleAnalyze} 
+      <Button
+        variant="primary"
+        onClick={handleBasicAnalyze}
         disabled={!pdfFile || loading}
       >
-        {loading ? 'Analyzing...' : 'Basic Analysis'}
+        {loading ? 'Analyzing...' : 'Basic Analysis (pdfminer)'}
       </Button>
-      <Button 
-        variant="secondary" 
-        onClick={handleAdvancedAnalyze} 
+      <Button
+        variant="primary"
+        onClick={handleAnalyze}
+        disabled={!pdfFile || loading}
+      >
+        {loading ? 'Analyzing...' : 'Detailed Analysis (pdfplumber)'}
+      </Button>
+      <Button
+        variant="secondary"
+        onClick={handleAdvancedAnalyze}
         disabled={!pdfFile || loading}
       >
         {loading ? 'Analyzing...' : 'Advanced Analysis'}
       </Button>
-      <Button 
-        variant="outline-secondary" 
+      <Button
+        variant="outline-secondary"
         onClick={handleClear}
       >
         Clear
