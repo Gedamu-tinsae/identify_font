@@ -7,7 +7,6 @@ import { API_BASE_URL } from './utils/helpers';
 import PDFUpload from './components/PDFUpload';
 import AnalysisButtons from './components/AnalysisButtons';
 import ResultsDisplay from './components/ResultsDisplay';
-import OCRResultsDisplay from './components/OCRResultsDisplay';
 
 function App() {
   const [pdfFile, setPdfFile] = useState(null);

@@ -5,6 +5,63 @@ import { formatPageName, formatColor } from '../utils/helpers';
 const ResultsDisplay = ({ analysisResult }) => {
   if (!analysisResult) return null;
 
+  // Check if this is an OCR result
+  if (analysisResult.ocr_analysis) {
+    const { ocr_analysis } = analysisResult;
+
+    if (ocr_analysis.error) {
+      return (
+        <Card className="mb-4">
+          <Card.Header>
+            <h5>OCR Text Extraction Results</h5>
+          </Card.Header>
+          <Card.Body>
+            <Alert variant="warning">
+              {ocr_analysis.error}
+            </Alert>
+          </Card.Body>
+        </Card>
+      );
+    }
+
+    return (
+      <Card className="mb-4">
+        <Card.Header>
+          <h5>OCR Text Extraction Results</h5>
+        </Card.Header>
+        <Card.Body>
+          <p><strong>File:</strong> {analysisResult.filename}</p>
+          <div>
+            <h6>Extracted Text from Images</h6>
+            {ocr_analysis.ocr_results && ocr_analysis.ocr_results.length > 0 ? (
+              <div>
+                {ocr_analysis.ocr_results.map((result, index) => (
+                  <div key={index} className="mb-3">
+                    <h6>Page {result.page}</h6>
+                    {result.extracted_text ? (
+                      <ListGroup>
+                        <ListGroup.Item>
+                          <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+                            {result.extracted_text}
+                          </pre>
+                        </ListGroup.Item>
+                      </ListGroup>
+                    ) : (
+                      <p className="text-muted">No text extracted from this page</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No text could be extracted from images in the PDF</p>
+            )}
+          </div>
+        </Card.Body>
+      </Card>
+    );
+  }
+
+  // Handle font analysis results
   return (
     <Card className="mb-4">
       <Card.Header>
@@ -12,7 +69,7 @@ const ResultsDisplay = ({ analysisResult }) => {
       </Card.Header>
       <Card.Body>
         <p><strong>File:</strong> {analysisResult.filename}</p>
-        
+
         {analysisResult.font_analysis && (
           <div>
             {analysisResult.font_analysis.basic_info && (
@@ -21,8 +78,8 @@ const ResultsDisplay = ({ analysisResult }) => {
                 <ListGroup>
                   {analysisResult.font_analysis.basic_info.map((font, index) => (
                     <ListGroup.Item key={index}>
-                      <strong>Name:</strong> {font.name} | 
-                      <strong> Subtype:</strong> {font.subtype} | 
+                      <strong>Name:</strong> {font.name} |
+                      <strong> Subtype:</strong> {font.subtype} |
                       <strong> Base Font:</strong> {font.basefont}
                     </ListGroup.Item>
                   ))}
@@ -93,8 +150,8 @@ const ResultsDisplay = ({ analysisResult }) => {
               <ListGroup>
                 {analysisResult.font_analysis.map((font, index) => (
                   <ListGroup.Item key={index}>
-                    <strong>Name:</strong> {font.name} | 
-                    <strong> Size:</strong> {font.size} | 
+                    <strong>Name:</strong> {font.name} |
+                    <strong> Size:</strong> {font.size} |
                     <strong> Page:</strong> {font.page}
                   </ListGroup.Item>
                 ))}
