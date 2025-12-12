@@ -47,32 +47,41 @@ def extract_fonts_basic(pdf_path):
     Extract font information from a PDF using pdfminer (app.py approach)
     """
     font_data = []
-    
+
     with open(pdf_path, 'rb') as pdf_file:
         parser = PDFParser(pdf_file)
         document = PDFDocument(parser)
 
-        # Extract font details from the PDF
+        # Extract font details from the PDF catalog
         try:
-            # Try to extract fonts from the document resources
-            fonts = resolve1(document.catalog['Resources'])['Font']
-            for font_name, font_details in fonts.items():
-                font_data.append({
-                    'name': str(font_name),
-                    'details': str(font_details)
-                })
+            if 'Resources' in document.catalog:
+                resources = resolve1(document.catalog['Resources'])
+                if 'Font' in resources:
+                    fonts = resolve1(resources['Font'])
+                    for font_name, font_details in fonts.items():
+                        font_data.append({
+                            'name': str(font_name),
+                            'details': str(font_details)
+                        })
+            else:
+                print("No Resources found in document catalog.")
         except KeyError:
-            # If AcroForm approach doesn't work, try Resources approach
+            # If direct approach doesn't work, try AcroForm approach
             try:
-                fonts = resolve1(document.catalog['AcroForm'])['DR']['Font']
-                for font_name, font_details in fonts.items():
-                    font_data.append({
-                        'name': str(font_name),
-                        'details': str(font_details)
-                    })
+                if 'AcroForm' in document.catalog:
+                    acro_form = resolve1(document.catalog['AcroForm'])
+                    if 'DR' in acro_form and 'Font' in resolve1(acro_form['DR']):
+                        fonts = resolve1(acro_form['DR']['Font'])
+                        for font_name, font_details in fonts.items():
+                            font_data.append({
+                                'name': str(font_name),
+                                'details': str(font_details)
+                            })
+                else:
+                    print("No AcroForm found in document catalog.")
             except KeyError:
                 print("No fonts found or unsupported PDF format.")
-    
+
     return font_data
 
 
@@ -88,26 +97,28 @@ def extract_fonts_advanced(pdf_path):
     
     # Use pdfminer for basic font extraction
     try:
+        from pdfminer.pdfpage import PDFPage
+
         with open(pdf_path, 'rb') as pdf_file:
             parser = PDFParser(pdf_file)
             document = PDFDocument(parser)
-            
+
             # Try to extract font info from resources
             fonts = defaultdict(int)
-            
-            for page_index in range(len(document.get_pages())):
-                page = document.get_pages()[page_index]
-                
-                if 'Resources' in page.attrs:
-                    resources = page.attrs['Resources']
-                    if 'Font' in resources:
+
+            # Access pages using PDFPage.create_pages() which is the correct method
+            for page in PDFPage.create_pages(document):
+                if hasattr(page, 'resources'):
+                    resources = page.resources
+                    if resources and 'Font' in resources:
                         font_resources = resolve1(resources['Font'])
                         for font_name, font_obj in font_resources.items():
-                            font_subtype = resolve1(font_obj.get('Subtype', 'Unknown'))
-                            font_basefont = resolve1(font_obj.get('BaseFont', 'Unknown'))
-                            
+                            resolved_font_obj = resolve1(font_obj)
+                            font_subtype = resolve1(resolved_font_obj.get('Subtype', 'Unknown')) if hasattr(resolved_font_obj, 'get') else 'Unknown'
+                            font_basefont = resolve1(resolved_font_obj.get('BaseFont', 'Unknown')) if hasattr(resolved_font_obj, 'get') else 'Unknown'
+
                             fonts[str(font_name)] += 1
-                            
+
                             font_data['basic_info'].append({
                                 'name': str(font_name),
                                 'subtype': str(font_subtype),
