@@ -7,6 +7,7 @@ const AnalysisButtons = ({
   handleBasicAnalyze,
   handleAnalyze,
   handleAdvancedAnalyze,
+  handleOCRAnalyze,
   handleClear
 }) => {
   return (
@@ -31,6 +32,13 @@ const AnalysisButtons = ({
         disabled={!pdfFile || loading}
       >
         {loading ? 'Analyzing...' : 'Advanced Analysis'}
+      </Button>
+      <Button
+        variant="info"
+        onClick={handleOCRAnalyze}
+        disabled={!pdfFile || loading}
+      >
+        {loading ? 'Analyzing...' : 'OCR Analysis'}
       </Button>
       <Button
         variant="outline-secondary"

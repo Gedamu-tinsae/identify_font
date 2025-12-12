@@ -7,6 +7,7 @@ import { API_BASE_URL } from './utils/helpers';
 import PDFUpload from './components/PDFUpload';
 import AnalysisButtons from './components/AnalysisButtons';
 import ResultsDisplay from './components/ResultsDisplay';
+import OCRResultsDisplay from './components/OCRResultsDisplay';
 
 function App() {
   const [pdfFile, setPdfFile] = useState(null);
@@ -114,6 +115,39 @@ function App() {
     }
   };
 
+  const handleOCRAnalyze = async () => {
+    if (!pdfFile) {
+      setError('Please select a PDF file first');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setUploadProgress(0);
+
+    try {
+      const formData = new FormData();
+      formData.append('pdf_file', pdfFile);
+
+      const response = await axios.post(`${API_BASE_URL}/api/fonts/ocr`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: (progressEvent) => {
+          const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(progress);
+        }
+      });
+
+      setAnalysisResult(response.data);
+    } catch (err) {
+      console.error('OCR analysis error:', err);
+      setError(err.response?.data?.error || 'Failed to analyze PDF. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleClear = () => {
     setPdfFile(null);
     setAnalysisResult(null);
@@ -149,6 +183,7 @@ function App() {
               handleBasicAnalyze={handleBasicAnalyze}
               handleAnalyze={handleAnalyze}
               handleAdvancedAnalyze={handleAdvancedAnalyze}
+              handleOCRAnalyze={handleOCRAnalyze}
               handleClear={handleClear}
             />
 
