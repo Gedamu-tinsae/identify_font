@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { FiCpu, FiBarChart2, FiSettings, FiEye, FiRefreshCw } from 'react-icons/fi';
+import styles from './AnalysisButtons.module.css';
 
 const AnalysisButtons = ({
   pdfFile,
@@ -12,7 +13,7 @@ const AnalysisButtons = ({
   handleClear
 }) => {
   return (
-    <div className="d-grid gap-3 d-md-flex justify-content-md-center mt-4">
+    <div className={`${styles.buttonGroup} d-grid gap-3 d-md-flex justify-content-md-center mt-4`}>
       <Button
         variant="primary"
         onClick={handleBasicAnalyze}

@@ -3,6 +3,7 @@ import { Card, Alert, ProgressBar } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
 import { isValidPDF, formatFileSize } from '../utils/helpers';
 import { FiUpload, FiFile, FiCheck, FiAlertCircle } from 'react-icons/fi';
+import styles from './PDFUpload.module.css';
 
 const PDFUpload = ({
   pdfFile,
@@ -40,7 +41,7 @@ const PDFUpload = ({
         </Card.Title>
         <div
           {...getRootProps()}
-          className={`dropzone border-3 rounded-4 p-5 text-center ${isDragActive ? 'border-primary bg-light' : ''}`}
+          className={`${styles.dropzone} border-3 rounded-4 p-5 text-center ${isDragActive ? styles.dropzoneBorderPrimary : ''}`}
           style={{ cursor: 'pointer', minHeight: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
           <input {...getInputProps()} />

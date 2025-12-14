@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import styles from './styles/App.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
@@ -154,12 +154,12 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Container className="py-5">
+    <div className={styles.app}>
+      <Container className={`${styles.container} py-5`}>
         <Row className="mb-4">
           <Col>
-            <h1 className="text-center mb-4">PDF Font Identifier</h1>
-            <p className="text-center text-muted">
+            <h1 className={`${styles.title} text-center mb-4`}>PDF Font Identifier</h1>
+            <p className={`${styles.description} text-center`}>
               Upload a PDF file to identify fonts used in the document
             </p>
           </Col>

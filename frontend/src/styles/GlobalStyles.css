@@ -1,45 +1,8 @@
-/* Modern gradient background */
-.App {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 2rem 0;
-  text-align: center;
+:root {
+  /* Define any CSS custom properties here if needed */
 }
 
-/* Main container styling */
-.container {
-  max-width: 1200px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  padding: 2rem;
-  margin: 0 auto;
-}
-
-/* Title styling */
-h1 {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 700;
-  font-size: 2.5rem;
-  color: #2d3748;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-/* Description text */
-.text-muted {
-  color: #718096 !important;
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-}
-
-/* Card styling */
+/* Globally override Bootstrap styles */
 .card {
   border: none;
   border-radius: 16px;
@@ -163,29 +126,6 @@ h1 {
   box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
 }
 
-/* Dropzone styling */
-.dropzone {
-  transition: all 0.3s ease;
-  border: 3px dashed #cbd5e0 !important;
-  background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%) !important;
-  color: #4a5568;
-  border-radius: 16px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.dropzone:hover {
-  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%) !important;
-  border-color: #a0aec0 !important;
-  transform: scale(1.02);
-}
-
-.dropzone.border-primary {
-  border-color: #667eea !important;
-  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%) !important;
-}
-
 /* Progress bar styling */
 .progress {
   border-radius: 20px;
@@ -307,20 +247,6 @@ pre {
   overflow-x: auto;
 }
 
-/* Result container spacing */
-.result-container {
-  margin-top: 2rem;
-}
-
-/* Button group styling */
-.d-grid.gap-2 {
-  gap: 1rem !important;
-}
-
-.d-md-flex.justify-content-md-center {
-  justify-content: center !important;
-}
-
 /* Spinner animation */
 .spinner-icon {
   animation: spin 1s linear infinite;
@@ -363,7 +289,7 @@ pre {
   60% {transform: translateY(-5px);}
 }
 
-/* Responsive button adjustments */
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .container {
     margin: 0 1rem;

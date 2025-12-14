@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Alert, Table, ListGroup } from 'react-bootstrap';
 import { formatPageName, formatColor } from '../utils/helpers';
 import { FiFileText, FiInfo, FiBarChart2, FiType, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi';
+import styles from './ResultsDisplay.module.css';
 
 const ResultsDisplay = ({ analysisResult }) => {
   if (!analysisResult) return null;
@@ -89,8 +90,8 @@ const ResultsDisplay = ({ analysisResult }) => {
 
   // Handle font analysis results
   return (
-    <Card className="mb-4 shadow-sm">
-      <Card.Header className="d-flex align-items-center">
+    <Card className={`${styles.resultCard} mb-4 shadow-sm`}>
+      <Card.Header className={`${styles.resultCardHeader} d-flex align-items-center`}>
         <FiInfo className="me-2" />
         <h5 className="mb-0">Analysis Results</h5>
       </Card.Header>

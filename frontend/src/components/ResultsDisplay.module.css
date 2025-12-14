@@ -1,0 +1,31 @@
+.resultContainer {
+  margin-top: 2rem;
+}
+
+.resultCard {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.resultCardHeader {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 1.25rem 1.5rem;
+  font-weight: 600;
+  border-radius: 15px 15px 0 0 !important;
+}
+
+.pageContainer {
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem;
+  background-color: #f8fafc;
+}
+
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 0.75rem;
+  }
+}
