@@ -68,3 +68,6 @@ node_modules/
 /dist/
 /out/
 /public/
+
+# Test directory
+test/
