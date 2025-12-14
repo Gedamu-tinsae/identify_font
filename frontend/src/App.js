@@ -186,7 +186,11 @@ function App() {
               handleClear={handleClear}
             />
 
-            <ResultsDisplay analysisResult={analysisResult} />
+            {analysisResult && (
+            <div className="fade-in">
+              <ResultsDisplay analysisResult={analysisResult} />
+            </div>
+          )}
           </Col>
         </Row>
       </Container>
