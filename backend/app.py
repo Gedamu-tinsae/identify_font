@@ -1,9 +1,11 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 import logging
 from config import UPLOAD_FOLDER, MAX_CONTENT_LENGTH
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Configuration
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
