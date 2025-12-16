@@ -1,25 +1,60 @@
+/* Define CSS variables for both themes */
 :root {
-  /* Define any CSS custom properties here if needed */
+  /* Dark theme color variables (default) */
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2d2d2d;
+  --surface: #1e1e1e;
+  --surface-raised: #252525;
+  --border: #3c3c3c;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --accent-primary: #bb86fc;
+  --accent-secondary: #03dac6;
+  --error: #cf6679;
+  --shadow: rgba(0, 0, 0, 0.5);
 }
 
-/* Globally override Bootstrap styles */
+/* Light theme color variables */
+[data-theme="light"] {
+  --bg-primary: #f5f7fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f0f2f5;
+  --surface: #ffffff;
+  --surface-raised: #f8f9fa;
+  --border: #d1d5db;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --accent-primary: #667eea;
+  --accent-secondary: #764ba2;
+  --error: #ef4444;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Apply theme to body */
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary);
+}
+
+/* Globally override Bootstrap styles based on theme */
 .card {
-  border: none;
+  border: 1px solid var(--border);
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px var(--shadow);
   transition: all 0.3s ease;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(5px);
+  background: var(--surface);
+  color: var(--text-primary);
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px var(--shadow);
 }
 
 .card-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, #9d4edd 100%);
   color: white;
   border: none;
   padding: 1.25rem 1.5rem;
@@ -29,6 +64,8 @@
 
 .card-body {
   padding: 1.5rem;
+  background: var(--surface);
+  color: var(--text-primary);
 }
 
 /* Custom button styles */
@@ -41,6 +78,7 @@
   border: none;
   position: relative;
   overflow: hidden;
+  color: white;
 }
 
 .btn:after {
@@ -58,7 +96,7 @@
 }
 
 .btn:focus:not(.btn:active) {
-  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(187, 134, 252, 0.5);
 }
 
 .btn:active:after {
@@ -78,14 +116,14 @@
 
 /* Primary button variant */
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, #9d4edd 100%);
   border: none;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  background: linear-gradient(135deg, #a461d8 0%, #8a3db8 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 20px rgba(187, 134, 252, 0.4);
 }
 
 /* Secondary button variant */
@@ -115,13 +153,13 @@
 /* Outline secondary button variant */
 .btn-outline-secondary {
   background: transparent;
-  border: 2px solid #6c757d;
-  color: #6c757d;
+  border: 2px solid var(--text-secondary);
+  color: var(--text-secondary);
 }
 
 .btn-outline-secondary:hover {
-  background: #6c757d;
-  color: white;
+  background: var(--text-secondary);
+  color: var(--bg-primary);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
 }
@@ -130,15 +168,15 @@
 .progress {
   border-radius: 20px;
   height: 12px;
-  background: #edf2f7;
+  background: var(--bg-tertiary);
   overflow: visible;
 }
 
 .progress-bar {
   border-radius: 20px;
   position: relative;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(90deg, var(--accent-primary), #9d4edd);
+  box-shadow: 0 4px 20px rgba(187, 134, 252, 0.4);
 }
 
 .progress-bar-animated {
@@ -154,22 +192,20 @@
 .alert {
   border-radius: 12px;
   border: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px var(--shadow);
+  color: white;
 }
 
 .alert-info {
-  background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
-  color: #2b6cb0;
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
 }
 
 .alert-danger {
-  background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
-  color: #c53030;
+  background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%);
 }
 
 .alert-warning {
-  background: linear-gradient(135deg, #fefcbf 0%, #faf089 100%);
-  color: #8d5410;
+  background: linear-gradient(135deg, #f57f17 0%, #f9a825 100%);
 }
 
 /* Table styling */
@@ -177,12 +213,13 @@
   border-radius: 12px;
   border-collapse: separate;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 15px var(--shadow);
   margin-bottom: 0;
+  background: var(--bg-tertiary);
 }
 
 .table thead th {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--accent-primary) 0%, #9d4edd 100%);
   color: white;
   border: none;
   font-weight: 600;
@@ -194,32 +231,45 @@
 
 .table tbody tr {
   transition: all 0.2s ease;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border);
 }
 
 .table tbody tr:hover {
-  background: rgba(102, 126, 234, 0.05);
+  background: rgba(187, 134, 252, 0.1);
 }
 
 .table tbody td {
   padding: 0.75rem 1rem;
   vertical-align: middle;
+  color: var(--text-primary);
+  border: none;
+}
+
+.table-dark {
+  --bs-table-bg: var(--bg-tertiary);
+  --bs-table-color: var(--text-primary);
+  --bs-table-border-color: var(--border);
 }
 
 /* List group styling */
 .list-group {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 15px var(--shadow);
   margin-bottom: 0;
+  background: var(--surface);
 }
 
 .list-group-item {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 0.95rem;
-  border: none;
+  border: 1px solid var(--border);
   padding: 1rem 1.25rem;
   transition: all 0.2s ease;
   border-radius: 0 !important;
+  background: var(--surface);
+  color: var(--text-primary);
 }
 
 .list-group-item:first-child {
@@ -231,20 +281,35 @@
 }
 
 .list-group-item:hover {
-  background: rgba(102, 126, 234, 0.05);
+  background: rgba(187, 134, 252, 0.1);
 }
 
 .list-group-item:not(:last-child) {
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border);
 }
 
 /* Pre element for code display */
 pre {
-  background: #f8f9fa;
+  background: var(--bg-tertiary);
   border-radius: 8px;
   padding: 1rem;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--border);
   overflow-x: auto;
+  color: var(--text-primary);
+}
+
+/* Form control styling */
+.form-control {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.form-control:focus {
+  background-color: var(--bg-tertiary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.2rem rgba(187, 134, 252, 0.25);
+  color: var(--text-primary);
 }
 
 /* Spinner animation */
@@ -273,9 +338,9 @@ pre {
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
-  70% { box-shadow: 0 0 0 15px rgba(102, 126, 234, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(187, 134, 252, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(187, 134, 252, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(187, 134, 252, 0); }
 }
 
 /* Bounce animation */

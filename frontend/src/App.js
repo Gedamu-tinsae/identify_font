@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTheme } from './context/ThemeContext';
 import styles from './styles/App.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { FiSun, FiMoon } from 'react-icons/fi';
 import axios from 'axios';
 import { API_BASE_URL } from './utils/helpers';
 import PDFUpload from './components/PDFUpload';
@@ -9,6 +11,7 @@ import AnalysisButtons from './components/AnalysisButtons';
 import ResultsDisplay from './components/ResultsDisplay';
 
 function App() {
+  const { theme, toggleTheme } = useTheme();
   const [pdfFile, setPdfFile] = useState(null);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -157,11 +160,21 @@ function App() {
     <div className={styles.app}>
       <Container className={`${styles.container} py-5`}>
         <Row className="mb-4">
-          <Col>
-            <h1 className={`${styles.title} text-center mb-4`}>PDF Font Identifier</h1>
-            <p className={`${styles.description} text-center`}>
-              Upload a PDF file to identify fonts used in the document
-            </p>
+          <Col className="d-flex justify-content-between align-items-center">
+            <div>
+              <h1 className={`${styles.title} text-center mb-4`}>PDF Font Identifier</h1>
+              <p className={`${styles.description} text-center`}>
+                Upload a PDF file to identify fonts used in the document
+              </p>
+            </div>
+            <Button
+              variant="link"
+              onClick={toggleTheme}
+              className="p-0 border-0"
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? <FiSun size={24} color="#bb86fc" /> : <FiMoon size={24} />}
+            </Button>
           </Col>
         </Row>
 

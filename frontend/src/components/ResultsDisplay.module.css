@@ -4,11 +4,13 @@
 
 .resultCard {
   margin-bottom: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px var(--dark-shadow);
+  background: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border);
 }
 
 .resultCardHeader {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--dark-accent-primary) 0%, #9d4edd 100%);
   color: white;
   border: none;
   padding: 1.25rem 1.5rem;
@@ -18,10 +20,11 @@
 
 .pageContainer {
   margin-bottom: 1.5rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--dark-border);
   border-radius: 12px;
   padding: 1rem;
-  background-color: #f8fafc;
+  background-color: var(--dark-bg-tertiary);
+  color: var(--dark-text-primary);
 }
 
 @media (max-width: 768px) {
