@@ -158,8 +158,8 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <Container className={`${styles.container} py-5`}>
-        <Row className="mb-4">
+      <Container className={styles.container}>
+        <Row className="position-relative mb-4">
           <Col className="d-flex flex-column align-items-center">
             <div className="text-center mb-3">
               <h1 className={styles.title}>PDF Font Identifier</h1>
@@ -167,24 +167,24 @@ function App() {
                 Upload a PDF file to identify fonts used in the document
               </p>
             </div>
-            <div className="ms-auto">
-              <Button
-                variant="link"
-                onClick={toggleTheme}
-                className="p-0 border-0 d-flex align-items-center justify-content-center"
-                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-                style={{
-                  color: theme === 'dark' ? 'var(--accent-primary)' : 'var(--accent-primary)',
-                  backgroundColor: 'transparent',
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%'
-                }}
-              >
-                {theme === 'dark' ? <FiSun size={20} /> : <FiMoon size={20} />}
-              </Button>
-            </div>
           </Col>
+          <div className="position-absolute top-0 end-0 p-2">
+            <Button
+              variant="link"
+              onClick={toggleTheme}
+              className="p-0 border-0 d-flex align-items-center justify-content-center"
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              style={{
+                color: theme === 'dark' ? 'var(--accent-primary)' : 'var(--accent-primary)',
+                backgroundColor: 'transparent',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%'
+              }}
+            >
+              {theme === 'dark' ? <FiSun size={20} /> : <FiMoon size={20} />}
+            </Button>
+          </div>
         </Row>
 
         <Row>

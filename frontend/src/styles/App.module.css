@@ -18,6 +18,10 @@
   padding: 2rem;
   margin: 0 auto;
   border: 1px solid var(--border);
+  min-height: 85vh; /* Add minimum height to allow for vertical centering */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Title styling */
