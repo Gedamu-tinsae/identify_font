@@ -1,8 +1,8 @@
 .dropzone {
   transition: all 0.3s ease;
-  border: 3px dashed var(--dark-border) !important;
-  background: linear-gradient(135deg, var(--dark-bg-tertiary) 0%, #2a2a3a 100%) !important;
-  color: var(--dark-text-secondary);
+  border: 3px dashed var(--border) !important;
+  background: linear-gradient(135deg, var(--bg-tertiary) 0%, #2a2a3a 100%) !important;
+  color: var(--text-secondary);
   border-radius: 16px;
   cursor: pointer;
   position: relative;
@@ -11,11 +11,11 @@
 
 .dropzone:hover {
   background: linear-gradient(135deg, #2a2a3a 0%, #33334a 100%) !important;
-  border-color: var(--dark-accent-primary) !important;
+  border-color: var(--accent-primary) !important;
   transform: scale(1.02);
 }
 
 .dropzoneBorderPrimary {
-  border-color: var(--dark-accent-primary) !important;
+  border-color: var(--accent-primary) !important;
   background: linear-gradient(135deg, #2d2545 0%, #3a2d5a 100%) !important;
 }
