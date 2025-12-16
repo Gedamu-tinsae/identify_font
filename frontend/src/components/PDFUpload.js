@@ -36,8 +36,8 @@ const PDFUpload = ({
   return (
     <Card className="mb-4 shadow-sm">
       <Card.Body>
-        <Card.Title className="d-flex align-items-center justify-content-center mb-4">
-          <FiUpload className="me-2" /> Select PDF File
+        <Card.Title className="d-flex align-items-center justify-content-center mb-4" style={{ color: 'var(--text-primary)' }}>
+          <FiUpload className="me-2" style={{ color: 'var(--accent-primary)' }} /> Select PDF File
         </Card.Title>
         <div
           {...getRootProps()}
@@ -46,14 +46,14 @@ const PDFUpload = ({
         >
           <input {...getInputProps()} />
           <div className="d-flex flex-column align-items-center">
-            <FiUpload size={48} className={`mb-3 ${isDragActive ? 'text-primary' : 'text-muted'}`} />
+            <FiUpload size={48} className="mb-3" style={{ color: isDragActive ? 'var(--accent-primary)' : 'var(--text-secondary)' }} />
             {isDragActive ? (
-              <p className="mb-0 fs-5 fw-bold text-primary">
+              <p className="mb-0 fs-5 fw-bold" style={{ color: 'var(--accent-primary)' }}>
                 Drop the PDF file here...
               </p>
             ) : (
-              <p className="mb-0 fs-5">
-                <span className="fw-bold">Drag & drop</span> a PDF file here, or <span className="fw-bold text-primary">click to browse</span>
+              <p className="mb-0 fs-5" style={{ color: 'var(--text-primary)' }}>
+                <span className="fw-bold">Drag & drop</span> a PDF file here, or <span className="fw-bold" style={{ color: 'var(--accent-primary)' }}>click to browse</span>
               </p>
             )}
           </div>
@@ -61,20 +61,20 @@ const PDFUpload = ({
 
         {pdfFile && (
           <div className="mt-4">
-            <Alert variant="info" className="d-flex align-items-center">
-              <FiFile className="me-2 fs-5" />
-              <div className="flex-grow-1 text-start">
-                <strong className="me-2">{pdfFile.name}</strong>
-                <small>({formatFileSize(pdfFile.size)} MB)</small>
+            <Alert variant="info" className="d-flex align-items-center" style={{ backgroundColor: 'rgba(135, 206, 250, 0.2)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}>
+              <FiFile className="me-2 fs-5" style={{ color: 'var(--accent-secondary)' }} />
+              <div className="flex-grow-1 text-start" style={{ color: 'var(--text-primary)' }}>
+                <strong className="me-2" style={{ color: 'var(--text-primary)' }}>{pdfFile.name}</strong>
+                <small style={{ color: 'var(--text-secondary)' }}>({formatFileSize(pdfFile.size)} MB)</small>
               </div>
-              <FiCheck className="text-success fs-5" />
+              <FiCheck className="fs-5" style={{ color: 'var(--accent-secondary)' }} />
             </Alert>
           </div>
         )}
 
         {uploadProgress > 0 && uploadProgress < 100 && (
           <div className="mt-4">
-            <div className="d-flex justify-content-between mb-1">
+            <div className="d-flex justify-content-between mb-1" style={{ color: 'var(--text-primary)' }}>
               <span>Uploading...</span>
               <span>{uploadProgress}%</span>
             </div>
@@ -87,9 +87,9 @@ const PDFUpload = ({
         )}
 
         {error && (
-          <Alert variant="danger" className="mt-4 d-flex align-items-center">
-            <FiAlertCircle className="me-2 fs-5" />
-            <div className="text-start">{error}</div>
+          <Alert variant="danger" className="mt-4 d-flex align-items-center" style={{ color: 'var(--text-primary)' }}>
+            <FiAlertCircle className="me-2 fs-5" style={{ color: 'var(--error)' }} />
+            <div className="text-start" style={{ color: 'var(--text-primary)' }}>{error}</div>
           </Alert>
         )}
       </Card.Body>

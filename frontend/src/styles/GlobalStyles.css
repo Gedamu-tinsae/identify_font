@@ -35,6 +35,7 @@
 body {
   background-color: var(--bg-primary) !important;
   color: var(--text-primary);
+  min-height: 100vh;
 }
 
 /* Globally override Bootstrap styles based on theme */

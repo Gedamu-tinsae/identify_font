@@ -170,10 +170,17 @@ function App() {
             <Button
               variant="link"
               onClick={toggleTheme}
-              className="p-0 border-0"
+              className="p-0 border-0 d-flex align-items-center justify-content-center"
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              style={{
+                color: theme === 'dark' ? 'var(--accent-primary)' : 'var(--accent-primary)',
+                backgroundColor: 'transparent',
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%'
+              }}
             >
-              {theme === 'dark' ? <FiSun size={24} color="#bb86fc" /> : <FiMoon size={24} />}
+              {theme === 'dark' ? <FiSun size={20} /> : <FiMoon size={20} />}
             </Button>
           </Col>
         </Row>
