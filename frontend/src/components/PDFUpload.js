@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone';
 import { isValidPDF, formatFileSize } from '../utils/helpers';
 import { FiUpload, FiFile, FiCheck, FiAlertCircle } from 'react-icons/fi';
 import styles from './PDFUpload.module.css';
+import PDFPreview from './PDFPreview';
 
 const PDFUpload = ({
   pdfFile,
@@ -61,14 +62,27 @@ const PDFUpload = ({
 
         {pdfFile && (
           <div className="mt-4">
-            <Alert variant="info" className="d-flex align-items-center" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}>
-              <FiFile className="me-2" style={{ color: 'var(--accent-secondary)' }} />
-              <div className="flex-grow-1 text-start" style={{ color: 'var(--text-primary)' }}>
-                <strong className="me-2" style={{ color: 'var(--text-primary)' }}>{pdfFile.name}</strong>
-                <small style={{ color: 'var(--text-secondary)' }}>({formatFileSize(pdfFile.size)} MB)</small>
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <div className="flex-grow-1" style={{ color: 'var(--text-primary)' }}>
+                <strong style={{ color: 'var(--text-primary)' }}>{pdfFile.name}</strong>
+                <small className="ms-2" style={{ color: 'var(--text-secondary)' }}>({formatFileSize(pdfFile.size)} MB)</small>
               </div>
-              <FiCheck className="fs-5" style={{ color: 'var(--accent-secondary)' }} />
-            </Alert>
+              <div>
+                <FiCheck className="fs-5 me-2" style={{ color: 'var(--accent-secondary)' }} />
+                <small style={{ color: 'var(--text-secondary)' }}>Ready for analysis</small>
+              </div>
+            </div>
+
+            <div style={{
+              border: '1px solid var(--border)',
+              borderRadius: '8px',
+              backgroundColor: 'var(--bg-tertiary)',
+              padding: '15px',
+              maxHeight: '500px',
+              overflow: 'auto'
+            }}>
+              <PDFPreview file={pdfFile} onError={(error) => console.error('PDF Preview Error:', error)} />
+            </div>
           </div>
         )}
 
