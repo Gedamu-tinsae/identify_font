@@ -61,8 +61,8 @@ const PDFUpload = ({
 
         {pdfFile && (
           <div className="mt-4">
-            <Alert variant="info" className="d-flex align-items-center" style={{ backgroundColor: 'rgba(135, 206, 250, 0.2)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}>
-              <FiFile className="me-2 fs-5" style={{ color: 'var(--accent-secondary)' }} />
+            <Alert variant="info" className="d-flex align-items-center" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}>
+              <FiFile className="me-2" style={{ color: 'var(--accent-secondary)' }} />
               <div className="flex-grow-1 text-start" style={{ color: 'var(--text-primary)' }}>
                 <strong className="me-2" style={{ color: 'var(--text-primary)' }}>{pdfFile.name}</strong>
                 <small style={{ color: 'var(--text-secondary)' }}>({formatFileSize(pdfFile.size)} MB)</small>
