@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Alert, Table, ListGroup } from 'react-bootstrap';
-import { formatPageName, formatColor } from '../utils/helpers';
+import { formatColor } from '../utils/helpers';
 import { FiFileText, FiInfo, FiBarChart2, FiType, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import styles from './ResultsDisplay.module.css';
 
@@ -133,7 +133,7 @@ const ResultsDisplay = ({ analysisResult }) => {
                   Font Usage Statistics
                 </h6>
                 <div className="table-responsive">
-                  <Table striped bordered hover className="shadow-sm" style={{ backgroundColor: 'var(--surface)' }}>
+                  <Table striped bordered hover className="shadow-sm" style={{ backgroundColor: 'var(--surface)', color: 'var(--text-primary)' }}>
                     <thead>
                       <tr style={{ backgroundColor: 'var(--bg-tertiary)' }}>
                         <th style={{ color: 'var(--text-primary)' }}>Font Name</th>
@@ -144,7 +144,7 @@ const ResultsDisplay = ({ analysisResult }) => {
                     </thead>
                     <tbody style={{ color: 'var(--text-primary)' }}>
                       {Object.entries(analysisResult.font_analysis.statistics).map(([key, stat]) => (
-                        <tr key={key} style={{ backgroundColor: 'var(--bg-tertiary)' }}>
+                        <tr key={key} style={{ backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-primary)' }}>
                           <td style={{ color: 'var(--text-primary)' }}><strong>{stat.font_name}</strong></td>
                           <td style={{ color: 'var(--text-primary)' }}>{stat.font_size}</td>
                           <td style={{ color: 'var(--text-primary)' }}>{stat.usage_count}</td>
@@ -167,7 +167,7 @@ const ResultsDisplay = ({ analysisResult }) => {
                   <div key={pageKey} className="mb-4 border rounded-3 p-3" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border)' }}>
                     <h6 className="d-flex align-items-center mb-3" style={{ color: 'var(--text-primary)' }}>
                       <FiType className="me-2" style={{ color: 'var(--accent-primary)' }} />
-                      {formatPageName(pageKey)}
+                      Page {pageKey.replace('page_', '')}
                     </h6>
                     {pageInfo.fonts && pageInfo.fonts.length > 0 ? (
                       <ListGroup className="mb-2" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
@@ -178,7 +178,7 @@ const ResultsDisplay = ({ analysisResult }) => {
                             </div>
                             <div className="d-flex">
                               <span className="badge me-1" style={{ backgroundColor: 'var(--accent-primary)', color: 'white' }}>{font.size}px</span>
-                              <span className="badge" style={{ backgroundColor: 'var(--accent-secondary)', color: 'white' }}>Pg {font.page || 'N/A'}</span>
+                              <span className="badge" style={{ backgroundColor: 'var(--accent-secondary)', color: 'white' }}>Pg {pageInfo.page || pageKey.replace('page_', '')}</span>
                             </div>
                           </ListGroup.Item>
                         ))}
